@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rock, Paper, Scissors game</title>
+</head>
+<body>
+    <h1>Rock, Paper, Scissors</h1>
+    <hr>
+
+    <p id="player_choice">&nbsp;</p>
+    <p id="computer_choice">&nbsp;</p>
+    <p id="round_result">&nbsp;</p>
+    <p id="round_message">&nbsp;</p>
+    <hr>
+    <p>Choose rock, paper or scissors!</p>
+    <br>
+    <br>
+
+
+    <button onclick="choose(0)">Rock</button>
+    <button  onclick="choose(1)">Paper</button>
+    <button onclick="choose(2)">Scissors</button>
+</body>
+<script>
+    function choose(x) {
+        fetch("/play?c=" + x)
+        .then(response => response.json())
+        .then(data => {
+            if(x == 0){
+            document.getElementById("player_choice").innerHTML="Player clicked rock";
+        } else if (x == 1){
+            document.getElementById("player_choice").innerHTML="Player clicked paper";
+        } else {
+            document.getElementById("player_choice").innerHTML="Player clicked scissors";
+        }
+        console.log(data.computer_choice)
+        document.getElementById("computer_choice").innerHTML = data.computer_choice
+        document.getElementById("round_result").innerHTML = data.round_result
+        document.getElementById("round_message").innerHTML = data.winner;
+        })
+    }
+</script>
+</html>
